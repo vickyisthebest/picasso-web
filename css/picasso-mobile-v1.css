@@ -1,0 +1,67 @@
+/* Picasso Suites: booking and layout refinements v1
+   Delivery: BedLoop > Configuración > Web > CSS personalizado (the field expects a URL to this file).
+   Rollback: clear the CSS personalizado field and save. No content, URL or booking setting changes.
+   Tested 8 Nov 2026 by injection only (not live) at 390, 800, 1024, 1280, 1366, 1440, 1536, 1680 px:
+   homepage, /apartamentos-barcelona/picassosuites11, Begur property page. */
+
+/* 1. Tourist licence numbers (ESFCTU...) did not wrap and forced sideways scrolling on
+      property pages: 539px wide in a 390px phone screen. */
+.descripcions-propietat p,
+.descripcions-propietat li {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+/* 2. Hide the homepage heading only while its BedLoop field is empty
+      ("Título de las propiedades destacadas"). Filling that field shows it again. */
+h2:has(> p:only-child > span:only-child:empty) {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  /* 3. Shorter hero so the first property block starts on screen one. */
+  .no-padding.container-fluid > figure.potblur {
+    height: 58svh !important;
+    min-height: 340px;
+  }
+  .no-padding.container-fluid + .pt-5 {
+    padding-top: 24px !important;
+  }
+
+  /* 4. Native "Elige fechas / Buscar" bar: solid background so it reads over any
+        photograph, larger tap target, iPhone safe area respected. */
+  .bh-mobile-trigger {
+    background: #fbf8f3 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border-top: 1px solid rgba(28, 31, 34, .08);
+    box-shadow: 0 -6px 24px rgba(28, 31, 34, .10);
+    min-height: 68px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+  .bh-mobile-trigger__resum {
+    font-size: 15px;
+    color: #1c1f22;
+  }
+  .bh-mobile-trigger__cta {
+    min-height: 46px;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    font-weight: 600;
+    letter-spacing: .04em;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* 5. Header overflow between 768px and 1535px: logo plus seven menu items need about
+      1,480px, so pages scrolled sideways (1,330px wide at 1024px). Use the existing
+      hamburger button up to 1535px. */
+@media (min-width: 768px) and (max-width: 1535.98px) {
+  nav.navbar { flex-wrap: wrap !important; }
+  nav.navbar .navbar-toggler { display: block !important; margin-left: auto; }
+  nav.navbar .navbar-collapse:not(.show) { display: none !important; }
+  nav.navbar .navbar-collapse.show { display: block !important; flex-basis: 100%; }
+  nav.navbar .navbar-collapse.show .navbar-nav { flex-direction: column !important; }
+  nav.navbar .navbar-brand img.logo { max-width: 220px !important; width: auto !important; height: auto !important; }
+}

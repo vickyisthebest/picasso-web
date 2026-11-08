@@ -1,0 +1,240 @@
+/* Picasso Suites: homepage design and booking layer v2 (supersedes v1)
+   Delivery: BedLoop > Configuración > Web > CSS personalizado (expects a URL to this file).
+   Rollback: put the previous value back in that field (currently empty), or clear it.
+   Changes styling only. No text, logo, favicon, URL or booking setting is changed.
+   Homepage rules are scoped with body:has(.caixa-home), an element that only exists on the homepage.
+   Status: PREVIEW ONLY, not deployed. */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500;600&display=swap");
+
+:root {
+  --ps-ivory: #fbf8f3;
+  --ps-limestone: #f1ebe1;
+  --ps-sand: #e4d9c8;
+  --ps-sage-50: #eef1ea;
+  --ps-sage-700: #56634d;
+  --ps-sage-900: #34402f;
+  --ps-salmon-50: #fbefe9;
+  --ps-salmon-600: #b96a51;
+  --ps-ink: #1f2421;
+  --ps-ink-soft: #4b524c;
+  --ps-line: rgba(31, 36, 33, .12);
+  --ps-serif: "Cormorant Garamond", Georgia, serif;
+  --ps-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --ps-shadow: 0 10px 34px rgba(31, 36, 33, .10);
+}
+
+/* ===== Site wide fixes from v1 (layout only) ===== */
+
+/* Licence numbers wrap: stops sideways scrolling on property pages */
+.descripcions-propietat p,
+.descripcions-propietat li { overflow-wrap: anywhere; word-break: break-word; }
+
+/* Hide headings only while their BedLoop field is empty */
+h2:has(> p:only-child > span:only-child:empty) { display: none !important; }
+
+/* Header: logo plus seven menu items need about 1,480px at BedLoop's default size.
+   From 1280px the menu is tightened so it fits; below 1280px the existing menu button is used. */
+@media (min-width: 1280px) and (max-width: 1535.98px) {
+  nav.navbar .navbar-brand img.logo { max-width: 230px !important; width: auto !important; height: auto !important; }
+  nav.navbar .navbar-brand { margin-right: 8px !important; }
+  nav.navbar .navegacio.nav-link, nav.navbar .navegacio.nav-item { padding-left: .55rem !important; padding-right: .55rem !important; font-size: .88rem !important; }
+  nav.navbar .navegacio.nav-item > a { padding-left: 0 !important; padding-right: 0 !important; }
+}
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  nav.navbar { flex-wrap: wrap !important; justify-content: space-between !important; }
+  nav.navbar .navbar-toggler { display: block !important; margin-left: auto; }
+  nav.navbar .navbar-collapse:not(.show) { display: none !important; }
+  nav.navbar .navbar-collapse.show { display: block !important; flex-basis: 100%; }
+  nav.navbar .navbar-collapse.show .navbar-nav { flex-direction: column !important; }
+  nav.navbar .navbar-brand img.logo { max-width: 220px !important; width: auto !important; height: auto !important; }
+}
+
+/* Mobile booking bar (homepage, search and destination pages): solid, larger tap target */
+@media (max-width: 767px) {
+  .bh-mobile-trigger {
+    background: var(--ps-ivory) !important;
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    border-top: 1px solid var(--ps-line);
+    box-shadow: 0 -6px 24px rgba(31, 36, 33, .10);
+    min-height: 68px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+  .bh-mobile-trigger__resum { font-size: 15px; color: var(--ps-ink); }
+  .bh-mobile-trigger__cta {
+    min-height: 46px; padding-left: 20px !important; padding-right: 20px !important;
+    font-weight: 600; letter-spacing: .06em; display: inline-flex; align-items: center;
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+  }
+  .bh-mobile-sheet--open button[type=submit] {
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important;
+  }
+}
+
+/* ===== Homepage design (approved direction) ===== */
+
+body:has(.caixa-home) {
+  background: var(--ps-ivory) !important;
+  color: var(--ps-ink);
+  font-family: var(--ps-sans) !important;
+}
+body:has(.caixa-home) main,
+body:has(.caixa-home) .fons,
+body:has(.caixa-home) .footer { background: transparent !important; }
+body:has(.caixa-home) p,
+body:has(.caixa-home) span,
+body:has(.caixa-home) a,
+body:has(.caixa-home) label,
+body:has(.caixa-home) input,
+body:has(.caixa-home) button,
+body:has(.caixa-home) .navegacio { font-family: var(--ps-sans) !important; }
+
+/* header */
+body:has(.caixa-home) nav.navbar {
+  background: rgba(251, 248, 243, .95) !important;
+  border-bottom: 1px solid var(--ps-line);
+  backdrop-filter: saturate(140%) blur(10px);
+}
+body:has(.caixa-home) nav.navbar .nav-link,
+body:has(.caixa-home) nav.navbar .dropdown-toggle { color: var(--ps-ink-soft) !important; letter-spacing: .03em; font-size: .95rem; }
+body:has(.caixa-home) nav.navbar .nav-link:hover { color: var(--ps-ink) !important; }
+
+/* buttons: sage instead of the BedLoop blue (inline styles need !important) */
+body:has(.caixa-home) .btn-primary {
+  background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+  border-radius: 999px !important; letter-spacing: .06em; text-transform: uppercase; font-size: .82rem !important; font-weight: 500 !important;
+  padding: .7rem 1.4rem !important;
+}
+body:has(.caixa-home) .btn-primary:hover { background: var(--ps-sage-900) !important; border-color: var(--ps-sage-900) !important; }
+
+/* headings: editorial serif */
+body:has(.caixa-home) main h2,
+body:has(.caixa-home) main h3 {
+  font-family: var(--ps-serif) !important; font-weight: 400 !important; color: var(--ps-ink);
+  letter-spacing: -.005em; line-height: 1.12;
+}
+body:has(.caixa-home) main h2 :is(p, span, a),
+body:has(.caixa-home) main h3 :is(p, span, a) { font-family: inherit !important; font-size: inherit !important; }
+body:has(.caixa-home) main > .fons > h3.text-center { font-size: clamp(2rem, 1.5rem + 2.2vw, 3.4rem) !important; max-width: 18ch; margin: 0 auto 2.5rem; }
+body:has(.caixa-home) main > div > h2.text-center,
+body:has(.caixa-home) main h3.text-center { font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.6rem) !important; }
+
+/* hero: inset editorial photograph */
+@media (min-width: 768px) {
+  body:has(.caixa-home) main > .no-padding.container-fluid { padding: 20px clamp(16px, 4vw, 48px) 0 !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur {
+    border-radius: 22px; overflow: hidden; height: min(60vh, 560px) !important; margin: 0 auto; max-width: 1340px;
+  }
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+/* desktop booking card */
+@media (min-width: 768px) {
+  body:has(.caixa-home) .caixa-home {
+    background: var(--ps-ivory) !important; border-radius: 22px !important; box-shadow: var(--ps-shadow) !important;
+    padding: 10px 12px !important; width: min(1040px, 88%) !important;
+    border: 1px solid var(--ps-line) !important;
+  }
+  body:has(.caixa-home) .caixa-home .buscador-inputs { padding: 8px 18px !important; border-radius: 14px; }
+  body:has(.caixa-home) .caixa-home .buscador-inputs:hover,
+  body:has(.caixa-home) .caixa-home .buscador-inputs:focus-within { background: var(--ps-sage-50); }
+  body:has(.caixa-home) .caixa-home .bderecha { border-right: 1px solid var(--ps-line) !important; }
+  body:has(.caixa-home) .caixa-home .titulobuscador {
+    font: 500 .7rem/1 var(--ps-sans) !important; letter-spacing: .16em; text-transform: uppercase; color: var(--ps-ink-soft) !important;
+  }
+  body:has(.caixa-home) .caixa-home .selected-text,
+  body:has(.caixa-home) .caixa-home input {
+    font-size: 1rem !important; color: var(--ps-ink) !important; background: transparent !important; box-shadow: none !important; padding-left: 0 !important;
+  }
+  body:has(.caixa-home) .caixa-home button[type=submit] {
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important;
+    border-radius: 16px !important; height: 56px !important; min-width: 140px; font-weight: 500;
+  }
+}
+
+/* mobile hero */
+@media (max-width: 767px) {
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur { height: 58svh !important; min-height: 340px; }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .pt-5 { padding-top: 28px !important; }
+  body:has(.caixa-home) main h2 :is(p, span, a),
+body:has(.caixa-home) main h3 :is(p, span, a) { font-family: inherit !important; font-size: inherit !important; }
+body:has(.caixa-home) main > .fons > h3.text-center { font-size: 2rem !important; padding: 0 16px; }
+}
+
+/* featured apartment cards */
+body:has(.caixa-home) .destacats-propietat .destacats-imatge-propietat,
+body:has(.caixa-home) .destacats-propietat img { border-radius: 14px !important; }
+body:has(.caixa-home) .destacats-propietat .lazy-load-image-background { border-radius: 14px; overflow: hidden; }
+body:has(.caixa-home) .destacats-titol-propietat,
+body:has(.caixa-home) .destacats-titol-propietat a {
+  font-family: var(--ps-serif) !important; font-size: 1.45rem !important; font-weight: 500 !important; color: var(--ps-ink) !important; text-decoration: none;
+}
+body:has(.caixa-home) .destacats-icones-propietat,
+body:has(.caixa-home) .destacats-ciutat-propietat,
+body:has(.caixa-home) .destacats-desc-propietat { color: var(--ps-ink-soft) !important; font-size: .9rem !important; }
+body:has(.caixa-home) .destacats-icones-propietat i { color: var(--ps-salmon-600) !important; }
+
+/* destination tiles */
+body:has(.caixa-home) .caixa-destins { position: relative; display: block; border-radius: 22px; overflow: hidden; }
+body:has(.caixa-home) .caixa-destins::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(31,36,33,0) 45%, rgba(31,36,33,.6));
+}
+body:has(.caixa-home) .caixa-destins img { transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+body:has(.caixa-home) .caixa-destins:hover img { transform: scale(1.03); }
+body:has(.caixa-home) .caixa-destins .sobreimagen {
+  z-index: 1; font-family: var(--ps-serif) !important; font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.6rem) !important;
+  font-weight: 400 !important; color: var(--ps-ivory) !important; text-shadow: none !important; letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+/* section rhythm and colour */
+body:has(.caixa-home) main > .fons { background: var(--ps-sage-50) !important; padding-bottom: 72px; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 { background: var(--ps-limestone) !important; margin-bottom: 0 !important; padding: 80px 0 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 i[class*="fa-"] { color: var(--ps-salmon-600) !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 h2.fs-4 { font-size: 1.5rem !important; font-weight: 500 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 p { color: var(--ps-ink-soft); }
+body:has(.caixa-home) .carrusel-container .titulo,
+body:has(.caixa-home) .carrusel-container .texto { font-family: var(--ps-serif) !important; }
+body:has(.caixa-home) .carrusel-container .texto { font-size: 1.25rem; font-style: italic; color: var(--ps-ink); }
+body:has(.caixa-home) .carrusel-container .persona { font-family: var(--ps-sans) !important; font-size: .85rem !important; letter-spacing: .12em; text-transform: uppercase; color: var(--ps-ink-soft); }
+body:has(.caixa-home) .carrusel-container .estrellas i { color: #c9973f !important; }
+body:has(.caixa-home) .footer { border-top: 1px solid var(--ps-line); color: var(--ps-ink-soft); }
+
+/* heading text lives in p and span inside BedLoop headings */
+body:has(.caixa-home) main h2 :is(p, span),
+body:has(.caixa-home) main h3 :is(p, span) { line-height: inherit !important; margin: 0 !important; }
+@media (min-width: 768px) {
+  body:has(.caixa-home) .caixa-home .numpersonas { background: transparent !important; padding-left: 0 !important; }
+}
+
+/* destination tiles: two large tiles, Barcelona first (approved layout) */
+body:has(.caixa-home) .destacats-desti.desti-grid2 {
+  display: grid !important; grid-template-columns: 1.35fr 1fr; gap: clamp(16px, 2.4vw, 32px);
+  max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px);
+}
+body:has(.caixa-home) .caixa-destins { width: 100% !important; max-width: none !important; height: clamp(320px, 38vw, 480px) !important; margin: 0 !important; }
+body:has(.caixa-home) .caixa-destins img,
+body:has(.caixa-home) .caixa-destins .destacats-imatge-desti {
+  position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important; object-fit: cover !important; border-radius: 0 !important;
+}
+body:has(.caixa-home) .caixa-destins .sobreimagen {
+  position: absolute !important; left: 28px !important; right: 28px !important; bottom: 22px !important; top: auto !important;
+  transform: none !important; text-align: left !important; width: auto !important;
+}
+body:has(.caixa-home) main > .potblur:has(.desti-grid2) { padding: 72px 0 !important; }
+body:has(.caixa-home) main > .potblur:has(.desti-grid2) > h2 { margin-bottom: 36px !important; }
+@media (max-width: 767px) { body:has(.caixa-home) .destacats-desti.desti-grid2 { grid-template-columns: 1fr; } }
+
+/* reviews carousel controls and why-book cards */
+body:has(.caixa-home) button.prev,
+body:has(.caixa-home) button.next {
+  background: transparent !important; color: var(--ps-sage-700) !important; border: 1px solid var(--ps-sage-700) !important;
+  border-radius: 999px !important; width: 40px; height: 40px;
+}
+body:has(.caixa-home) .dots .active,
+body:has(.caixa-home) .dots [class*=active] { background: var(--ps-sage-700) !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .col-lg-6 > * {
+  background: var(--ps-ivory); box-shadow: none !important; border: 1px solid var(--ps-line); border-radius: 18px;
+}
