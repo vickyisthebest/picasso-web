@@ -1,0 +1,425 @@
+/* Picasso Suites: BedLoop design layer v4 (supersedes v3, which stays as rollback)
+   Delivery: BedLoop > Configuración > Web > CSS personalizado (expects a URL to this file).
+   Rollback: put the v3 URL back in that field, or clear it.
+   Styling only. This file contains no editorial text, no booking claims, no logo and no URLs except the font import.
+   Every visible word comes from BedLoop fields or BedLoop's own interface translations.
+   Homepage rules are scoped with body:has(.caixa-home), an element that only exists on the homepage.
+   Status: PREVIEW ONLY, not deployed.
+
+   What is new in v4
+   1. Approved palette tokens (#929D85, #DEA38F, #E5D4BD, #F8F5EF, functional #56634D and #B96A51).
+   2. Desktop split hero (992px and wider): editorial column on the left, portrait photograph on the right.
+      The left column shows two existing BedLoop fields, repositioned with CSS grid:
+        Configuración > Web > "Título destacados"     (eyebrow line, hidden while empty)
+        Configuración > Web > "Subtítulo destacados"  (headline)
+      followed by the booking card. Nothing is moved in the HTML; only the visual position changes.
+   3. Stacked booking card: destination on its own row, dates and guests side by side,
+      then a full width button that shows BedLoop's own translated "Buscar" label.
+   4. Why book cards in one even row, footer link column no longer looks like a heading.
+   5. Property pages: approved fonts and button colour (layout untouched).
+   Mobile (below 768px) keeps BedLoop's native booking bar and full screen sheet, which passed all tests. */
+
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Jost:wght@300;400;500;600&display=swap");
+
+:root {
+  /* approved palette, 8 November 2026 */
+  --ps-sage: #929d85;
+  --ps-salmon: #dea38f;
+  --ps-sand: #e5d4bd;
+  --ps-ivory: #f8f5ef;
+  /* approved functional shades */
+  --ps-sage-700: #56634d;
+  --ps-salmon-600: #b96a51;
+  /* tints mixed only from the approved colours */
+  --ps-sage-50: color-mix(in srgb, #929d85 14%, #f8f5ef);
+  --ps-sand-soft: color-mix(in srgb, #e5d4bd 45%, #f8f5ef);
+  --ps-limestone: color-mix(in srgb, #e5d4bd 30%, #f8f5ef);
+  --ps-sage-900: color-mix(in srgb, #56634d 82%, #1f2421);
+  /* text colours from the approved prototype */
+  --ps-ink: #1f2421;
+  --ps-ink-soft: #4b524c;
+  --ps-line: rgba(31, 36, 33, .12);
+  --ps-serif: "Cormorant Garamond", Georgia, serif;
+  --ps-sans: "Jost", "Helvetica Neue", Arial, sans-serif;
+  --ps-shadow: 0 10px 34px rgba(31, 36, 33, .10);
+}
+
+/* ===== Site wide fixes (unchanged from v3) ===== */
+
+.descripcions-propietat p,
+.descripcions-propietat li { overflow-wrap: anywhere; word-break: break-word; }
+
+h2:has(> p:only-child > span:only-child:empty) { display: none !important; }
+
+@media (min-width: 1280px) and (max-width: 1535.98px) {
+  nav.navbar .navbar-brand img.logo { max-width: 230px !important; width: auto !important; height: auto !important; }
+  nav.navbar .navbar-brand { margin-right: 8px !important; }
+  nav.navbar .navegacio.nav-link, nav.navbar .navegacio.nav-item { padding-left: .55rem !important; padding-right: .55rem !important; font-size: .88rem !important; }
+  nav.navbar .navegacio.nav-item > a { padding-left: 0 !important; padding-right: 0 !important; }
+}
+@media (min-width: 768px) and (max-width: 1279.98px) {
+  nav.navbar { flex-wrap: wrap !important; justify-content: space-between !important; }
+  nav.navbar .navbar-toggler { display: block !important; margin-left: auto; }
+  nav.navbar .navbar-collapse:not(.show) { display: none !important; }
+  nav.navbar .navbar-collapse.show { display: block !important; flex-basis: 100%; }
+  nav.navbar .navbar-collapse.show .navbar-nav { flex-direction: column !important; }
+  nav.navbar .navbar-brand img.logo { max-width: 220px !important; width: auto !important; height: auto !important; }
+}
+
+/* Mobile booking bar and sheet (BedLoop native mechanism, restyled only) */
+@media (max-width: 767px) {
+  .bh-mobile-trigger {
+    background: var(--ps-ivory) !important;
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    border-top: 1px solid var(--ps-line);
+    box-shadow: 0 -6px 24px rgba(31, 36, 33, .10);
+    min-height: 68px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom)) !important;
+  }
+  .bh-mobile-trigger__resum { font-size: 15px; color: var(--ps-ink); font-family: var(--ps-sans); }
+  .bh-mobile-trigger__cta {
+    min-height: 46px; padding-left: 20px !important; padding-right: 20px !important;
+    font-weight: 600; letter-spacing: .06em; display: inline-flex; align-items: center;
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+  }
+  .bh-mobile-sheet--open { background: var(--ps-ivory) !important; font-family: var(--ps-sans); }
+  .bh-mobile-sheet--open .titulobuscador { font: 500 .72rem/1 var(--ps-sans) !important; letter-spacing: .16em; text-transform: uppercase; color: var(--ps-ink-soft) !important; }
+  .bh-mobile-sheet--open .buscador-inputs:not(.botonsubmit) { background: var(--ps-sand-soft) !important; border-radius: 14px; border: 0 !important; }
+  .bh-mobile-sheet--open button[type=submit] {
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+    border-radius: 16px !important; min-height: 56px; letter-spacing: .08em; text-transform: uppercase; font-weight: 500;
+  }
+}
+
+/* ===== Homepage ===== */
+
+body:has(.caixa-home) {
+  background: var(--ps-ivory) !important;
+  color: var(--ps-ink);
+  font-family: var(--ps-sans) !important;
+}
+body:has(.caixa-home) main,
+body:has(.caixa-home) .fons,
+body:has(.caixa-home) .footer { background: transparent !important; }
+body:has(.caixa-home) p,
+body:has(.caixa-home) span,
+body:has(.caixa-home) a,
+body:has(.caixa-home) label,
+body:has(.caixa-home) input,
+body:has(.caixa-home) button,
+body:has(.caixa-home) .navegacio { font-family: var(--ps-sans) !important; }
+
+/* header */
+body:has(.caixa-home) nav.navbar {
+  background: color-mix(in srgb, #f8f5ef 95%, transparent) !important;
+  border-bottom: 1px solid var(--ps-line);
+  backdrop-filter: saturate(140%) blur(10px);
+}
+body:has(.caixa-home) nav.navbar .nav-link,
+body:has(.caixa-home) nav.navbar .dropdown-toggle { color: var(--ps-ink-soft) !important; letter-spacing: .03em; font-size: .92rem; }
+body:has(.caixa-home) nav.navbar .nav-link:hover { color: var(--ps-ink) !important; }
+
+/* buttons: sage instead of the BedLoop blue (inline styles need !important) */
+body:has(.caixa-home) .btn-primary {
+  background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+  border-radius: 999px !important; letter-spacing: .06em; text-transform: uppercase; font-size: .82rem !important; font-weight: 500 !important;
+  padding: .7rem 1.4rem !important;
+}
+body:has(.caixa-home) .btn-primary:hover { background: var(--ps-sage-900) !important; border-color: var(--ps-sage-900) !important; }
+
+/* headings: editorial serif */
+body:has(.caixa-home) main h2,
+body:has(.caixa-home) main h3 {
+  font-family: var(--ps-serif) !important; font-weight: 400 !important; color: var(--ps-ink);
+  letter-spacing: -.005em; line-height: 1.12;
+}
+body:has(.caixa-home) main h2 :is(p, span, a),
+body:has(.caixa-home) main h3 :is(p, span, a) { font-family: inherit !important; font-size: inherit !important; line-height: inherit !important; margin: 0 !important; }
+body:has(.caixa-home) main h3.text-center,
+body:has(.caixa-home) main > div > h2.text-center { font-size: clamp(1.8rem, 1.4rem + 1.6vw, 2.6rem) !important; }
+
+/* hero text is above the fold: BedLoop's word by word blur reveal is switched off there, otherwise the
+   headline can stay invisible until the visitor scrolls (seen on mobile when the stylesheet loads after the page) */
+body:has(.caixa-home) main > .no-padding.container-fluid + .fons > :is(h2, h3) span[style] {
+  opacity: 1 !important; filter: none !important; transform: none !important;
+}
+
+/* --- hero, tablet (768 to 991px): inset photograph with the booking card below it --- */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  body:has(.caixa-home) main > .no-padding.container-fluid { padding: 20px 24px 0 !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur {
+    border-radius: 22px; overflow: hidden; height: 52vh !important; min-height: 360px; margin: 0;
+  }
+  body:has(.caixa-home) .caixa-home {
+    position: relative !important; top: auto !important; margin: -64px auto 0 !important; width: calc(100% - 48px) !important;
+  }
+}
+
+/* --- hero, desktop (992px and wider): split layout --- */
+@media (min-width: 992px) {
+  body:has(.caixa-home) main {
+    display: grid !important;
+    grid-template-columns:
+      [full-start] minmax(24px, 1fr)
+      [l-start] minmax(0, 560px) [l-end]
+      minmax(40px, 72px)
+      [r-start] minmax(0, 540px) [r-end]
+      minmax(24px, 1fr) [full-end];
+    grid-template-rows: auto minmax(32px, 1fr) auto auto auto minmax(32px, 1fr);
+    grid-auto-rows: auto;
+  }
+  body:has(.caixa-home) main > * { grid-column: full; min-width: 0; }
+  /* hero wrapper and the first featured section lend their children to the page grid */
+  body:has(.caixa-home) main > .no-padding.container-fluid,
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons { display: contents !important; }
+
+  /* portrait photograph (BedLoop destination image, rotates natively) */
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur {
+    grid-column: r; grid-row: 2 / 7;
+    height: clamp(560px, 78vh, 700px) !important; width: 100% !important;
+    margin: 36px 0 12px !important; border-radius: 22px; overflow: hidden;
+    background-size: cover !important; background-position: center !important;
+  }
+  /* eyebrow: "Título destacados" field (hidden while empty) */
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h2 {
+    grid-column: l; grid-row: 3; text-align: left !important; margin: 0 0 14px !important;
+    font: 500 .78rem/1.4 var(--ps-sans) !important; letter-spacing: .18em; text-transform: uppercase; color: var(--ps-salmon-600) !important;
+  }
+  /* headline: "Subtítulo destacados" field */
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h3 {
+    grid-column: l; grid-row: 4; text-align: left !important; max-width: 20ch; margin: 0 0 28px !important;
+    font-size: clamp(2.4rem, 1.5rem + 1.8vw, 3.3rem) !important; line-height: 1.06 !important; padding: 0 !important;
+  }
+  /* booking card */
+  body:has(.caixa-home) .caixa-home {
+    grid-column: l; grid-row: 5; align-self: start;
+    position: relative !important; top: auto !important; margin: 0 !important; transform: none !important;
+    width: 100% !important; max-width: 520px !important; z-index: 20 !important;
+  }
+  /* featured property cards follow the hero as their own band */
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > .destacats {
+    grid-column: full; background: var(--ps-sage-50); width: auto !important; max-width: none !important;
+    padding: 72px max(24px, calc((100% - 1180px) / 2)) !important; margin: 56px 0 0 !important;
+  }
+}
+
+/* --- booking card (768px and wider) --- */
+@media (min-width: 768px) {
+  body:has(.caixa-home) .caixa-home {
+    background: var(--ps-ivory) !important; border-radius: 22px !important; box-shadow: var(--ps-shadow) !important;
+    border: 1px solid var(--ps-line) !important; padding: 12px !important;
+  }
+  body:has(.caixa-home) .caixa-home .titulobuscador {
+    font: 500 .7rem/1 var(--ps-sans) !important; letter-spacing: .16em; text-transform: uppercase; color: var(--ps-ink-soft) !important;
+  }
+  body:has(.caixa-home) .caixa-home .selected-text,
+  body:has(.caixa-home) .caixa-home input {
+    font-size: 1rem !important; color: var(--ps-ink) !important; background: transparent !important; box-shadow: none !important; padding-left: 0 !important;
+  }
+  body:has(.caixa-home) .caixa-home .numpersonas { background: transparent !important; padding-left: 0 !important; }
+  body:has(.caixa-home) .caixa-home button[type=submit] {
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+    border-radius: 16px !important; min-height: 56px !important; font-weight: 500;
+  }
+}
+@media (min-width: 768px) and (max-width: 991.98px) {
+  body:has(.caixa-home) .caixa-home .buscador-inputs { padding: 8px 18px !important; border-radius: 14px; }
+  body:has(.caixa-home) .caixa-home .bderecha { border-right: 1px solid var(--ps-line) !important; }
+}
+/* stacked fields and full width button (desktop) */
+@media (min-width: 992px) {
+  body:has(.caixa-home) .caixa-home form > .row {
+    display: grid !important; grid-template-columns: 3fr 2fr; gap: 8px; margin: 0 !important;
+  }
+  body:has(.caixa-home) .caixa-home form > .row > .buscador-inputs {
+    width: auto !important; max-width: none !important; flex: none !important; margin: 0 !important;
+    padding: 12px 16px !important; border: 0 !important; border-radius: 14px; background: var(--ps-sand-soft);
+    min-height: 66px; display: flex; flex-direction: column; justify-content: center; gap: 6px; position: relative;
+  }
+  body:has(.caixa-home) .caixa-home form > .row > .buscador-inputs:first-child { grid-column: 1 / -1; }
+  body:has(.caixa-home) .caixa-home form > .row > .buscador-inputs:hover,
+  body:has(.caixa-home) .caixa-home form > .row > .buscador-inputs:focus-within { background: color-mix(in srgb, #e5d4bd 70%, #f8f5ef); }
+  body:has(.caixa-home) .caixa-home form > .row > .botonsubmit {
+    grid-column: 1 / -1; background: transparent !important; padding: 4px 0 0 !important; min-height: 0;
+  }
+  body:has(.caixa-home) .caixa-home .botonsubmit button[type=submit] {
+    width: 100% !important; display: inline-flex !important; align-items: center; justify-content: center; gap: 10px;
+    letter-spacing: .12em; text-transform: uppercase; font-size: .88rem !important;
+  }
+  /* BedLoop's own translated button label ("Buscar" / "Search"), hidden by default on desktop */
+  body:has(.caixa-home) .caixa-home .botonsubmit .onlymobile { display: inline !important; }
+  body:has(.caixa-home) .caixa-home form > .row > .buscador-inputs .titulobuscador { padding: 0 !important; margin: 0 !important; }
+  body:has(.caixa-home) .caixa-home .botonsubmit .fs21 { font-size: 1rem !important; }
+  body:has(.caixa-home) .caixa-home .react-datepicker-wrapper,
+  body:has(.caixa-home) .caixa-home .custom-select-container { width: 100%; }
+  /* BedLoop centres the two month calendar under the date field; with the card in the left column that pushed
+     it 87px off screen at 1440px. Anchor it to the left edge of the date field instead. */
+  body:has(.caixa-home) .caixa-home .react-datepicker-popper { right: auto !important; width: max-content !important; }
+}
+
+/* mobile hero with the booking card shown inline (stacked fields), under a shorter photograph.
+   The same BedLoop form element is used; when the bottom bar opens the full screen sheet, BedLoop's own
+   sheet styling takes over (the rules below exclude .bh-mobile-sheet--open). */
+@media (max-width: 767px) {
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur { height: 34svh !important; min-height: 220px; }
+  /* same order as the approved mobile prototype: photograph, eyebrow, headline, booking card, then the property cards */
+  body:has(.caixa-home) main { display: flex !important; flex-direction: column; }
+  body:has(.caixa-home) main > * { order: 10; min-width: 0; }
+  body:has(.caixa-home) main > nav.navbar { order: 1; }
+  body:has(.caixa-home) main > .no-padding.container-fluid,
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons { display: contents !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid > figure.potblur { order: 2; margin: 0 !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h2 {
+    order: 3; text-align: left !important; margin: 24px 20px 8px !important; padding: 0 !important;
+    font: 500 .74rem/1.4 var(--ps-sans) !important; letter-spacing: .18em; text-transform: uppercase; color: var(--ps-salmon-600) !important;
+  }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h3 { order: 4; text-align: left !important; margin: 22px 20px 18px !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h2 + h3 { margin-top: 0 !important; }
+  body:has(.caixa-home) .caixa-home { order: 5; }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > .destacats {
+    order: 6; background: var(--ps-sage-50); margin: 32px 0 0 !important; padding: 40px 16px 56px !important; width: auto !important; max-width: none !important;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) {
+    display: block !important; position: relative !important; top: auto !important; margin: 0 16px !important; width: auto !important;
+    background: var(--ps-ivory) !important; border-radius: 22px !important; box-shadow: var(--ps-shadow) !important;
+    border: 1px solid var(--ps-line) !important; padding: 10px !important; z-index: 5;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) form > .row { display: grid !important; grid-template-columns: 1fr; gap: 8px; margin: 0 !important; }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) form > .row > .buscador-inputs {
+    width: auto !important; max-width: none !important; margin: 0 !important; padding: 10px 14px !important; border: 0 !important;
+    border-radius: 14px; background: var(--ps-sand-soft); position: relative;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) form > .row > .botonsubmit { background: transparent; padding: 2px 0 0 !important; }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) button[type=submit] {
+    width: 100% !important; min-height: 54px; border-radius: 16px !important; text-transform: uppercase; letter-spacing: .1em;
+    background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) .titulobuscador {
+    font: 500 .7rem/1 var(--ps-sans) !important; letter-spacing: .16em; text-transform: uppercase; color: var(--ps-ink-soft) !important; padding: 0 !important;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) :is(.selected-text, input, .numpersonas) { background: transparent !important; padding-left: 0 !important; box-shadow: none !important; }
+  body:has(.caixa-home) main > .no-padding.container-fluid + .fons > h3 { font-size: 2.1rem !important; padding: 0 !important; line-height: 1.1 !important; }
+  /* date picker and guest panel open centred on screen, above the native bottom bar (tested 390px) */
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) .react-datepicker-popper {
+    position: fixed !important; inset: auto auto auto 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important;
+    margin: 0 !important; z-index: 3000 !important; box-shadow: 0 18px 50px rgba(31, 36, 33, .28); border-radius: 16px;
+  }
+  body:has(.caixa-home) .caixa-home:not(.bh-mobile-sheet--open) .formpersonas {
+    position: fixed !important; left: 50% !important; top: 50% !important; right: auto !important; bottom: auto !important;
+    transform: translate(-50%, -50%) !important; width: min(340px, calc(100vw - 32px)) !important; margin: 0 !important;
+    z-index: 3000 !important; box-shadow: 0 18px 50px rgba(31, 36, 33, .28) !important; border-radius: 16px !important;
+  }
+}
+
+/* featured apartment cards */
+body:has(.caixa-home) .destacats-propietat .destacats-imatge-propietat,
+body:has(.caixa-home) .destacats-propietat img { border-radius: 14px !important; }
+body:has(.caixa-home) .destacats-propietat .lazy-load-image-background { border-radius: 14px; overflow: hidden; }
+body:has(.caixa-home) .destacats-titol-propietat,
+body:has(.caixa-home) .destacats-titol-propietat a {
+  font-family: var(--ps-serif) !important; font-size: 1.45rem !important; font-weight: 500 !important; color: var(--ps-ink) !important; text-decoration: none;
+}
+body:has(.caixa-home) .destacats-icones-propietat,
+body:has(.caixa-home) .destacats-ciutat-propietat,
+body:has(.caixa-home) .destacats-desc-propietat { color: var(--ps-ink-soft) !important; font-size: .9rem !important; }
+body:has(.caixa-home) .destacats-icones-propietat i { color: var(--ps-salmon-600) !important; }
+@media (max-width: 991.98px) {
+  body:has(.caixa-home) main > .fons { background: var(--ps-sage-50) !important; padding-bottom: 72px; }
+}
+
+/* destination tiles: two large tiles, Barcelona first */
+body:has(.caixa-home) .caixa-destins { position: relative; display: block; border-radius: 22px; overflow: hidden; }
+body:has(.caixa-home) .caixa-destins::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(31,36,33,0) 45%, rgba(31,36,33,.6));
+}
+body:has(.caixa-home) .caixa-destins img { transition: transform 1s cubic-bezier(.2,.7,.2,1); }
+body:has(.caixa-home) .caixa-destins:hover img { transform: scale(1.03); }
+body:has(.caixa-home) .destacats-desti.desti-grid2 {
+  display: grid !important; grid-template-columns: 1.35fr 1fr; gap: clamp(16px, 2.4vw, 32px);
+  max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 clamp(16px, 4vw, 48px);
+}
+body:has(.caixa-home) .caixa-destins { width: 100% !important; max-width: none !important; height: clamp(320px, 38vw, 480px) !important; margin: 0 !important; }
+body:has(.caixa-home) .caixa-destins img,
+body:has(.caixa-home) .caixa-destins .destacats-imatge-desti {
+  position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important;
+  max-width: none !important; max-height: none !important; object-fit: cover !important; border-radius: 0 !important;
+}
+body:has(.caixa-home) .caixa-destins .sobreimagen {
+  z-index: 1; position: absolute !important; left: 28px !important; right: 28px !important; bottom: 22px !important; top: auto !important;
+  transform: none !important; text-align: left !important; width: auto !important;
+  font-family: var(--ps-serif) !important; font-size: clamp(1.8rem, 1.3rem + 1.6vw, 2.6rem) !important;
+  font-weight: 400 !important; color: var(--ps-ivory) !important; text-shadow: none !important; letter-spacing: 0 !important; text-transform: none !important;
+}
+body:has(.caixa-home) main > .potblur:has(.desti-grid2) { padding: 72px 0 !important; }
+body:has(.caixa-home) main > .potblur:has(.desti-grid2) > h2 { margin-bottom: 36px !important; }
+@media (max-width: 767px) { body:has(.caixa-home) .destacats-desti.desti-grid2 { grid-template-columns: 1fr; } }
+
+/* why book cards: one even row on desktop, two columns on tablet */
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 { background: var(--ps-limestone) !important; margin-bottom: 0 !important; padding: 80px 0 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 i[class*="fa-"] { color: var(--ps-salmon-600) !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 h2.fs-4 { font-size: 1.5rem !important; font-weight: 500 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 p { color: var(--ps-ink-soft); }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .row.gx-lg-5 { display: grid !important; gap: 20px; margin: 0 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .row.gx-lg-5 > [class*=col-] { width: auto !important; max-width: none !important; padding: 0 !important; margin: 0 !important; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .row.gx-lg-5 > [class*=col-] > div { height: 100%; }
+body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .card {
+  background: var(--ps-ivory) !important; box-shadow: none !important; border: 1px solid var(--ps-line) !important; border-radius: 18px !important;
+}
+@media (min-width: 768px) { body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .row.gx-lg-5 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1200px) { body:has(.caixa-home) main > .pt-4.pb-5.mb-5 .row.gx-lg-5 { grid-template-columns: repeat(4, 1fr); } }
+
+/* reviews carousel */
+body:has(.caixa-home) .carrusel-container .titulo,
+body:has(.caixa-home) .carrusel-container .texto { font-family: var(--ps-serif) !important; }
+body:has(.caixa-home) .carrusel-container .texto { font-size: 1.25rem; font-style: italic; color: var(--ps-ink); }
+body:has(.caixa-home) .carrusel-container .persona { font-family: var(--ps-sans) !important; font-size: .85rem !important; letter-spacing: .12em; text-transform: uppercase; color: var(--ps-ink-soft); }
+body:has(.caixa-home) .carrusel-container .estrellas i { color: var(--ps-salmon-600) !important; }
+body:has(.caixa-home) button.prev,
+body:has(.caixa-home) button.next {
+  background: transparent !important; color: var(--ps-sage-700) !important; border: 1px solid var(--ps-sage-700) !important;
+  border-radius: 999px !important; width: 40px; height: 40px;
+}
+body:has(.caixa-home) .dots .active,
+body:has(.caixa-home) .dots [class*=active] { background: var(--ps-sage-700) !important; }
+
+/* about text */
+body:has(.caixa-home) main > .p-5.text-center.potblur { padding: 56px 16px 8px !important; }
+body:has(.caixa-home) main > .p-5.text-center.potblur > p {
+  border-top: 0 !important; padding: 0 !important; max-width: 62ch; margin: 0 auto !important;
+  font-family: var(--ps-serif) !important; font-style: italic; font-size: 1.2rem; line-height: 1.55; color: var(--ps-ink-soft);
+}
+
+/* footer: every existing item stays visible and unchanged */
+body:has(.caixa-home) footer.footer {
+  background: var(--ps-limestone) !important; border-top: 1px solid var(--ps-line);
+  padding: 48px 0 28px !important; margin-top: 48px; font-size: .9rem; color: var(--ps-ink-soft);
+}
+body:has(.caixa-home) footer.footer .row.justify-content-center {
+  display: grid !important; grid-template-columns: 1.2fr 1fr 1fr; gap: 32px; align-items: start;
+  max-width: 1080px; margin: 0 auto;
+}
+body:has(.caixa-home) footer.footer .row > .col-md-3 { width: auto !important; max-width: none !important; padding: 0 !important; }
+body:has(.caixa-home) footer.footer .row > .col-md-3:has(> ul:empty) { display: none !important; }
+body:has(.caixa-home) footer.footer .logo-footer { max-width: 190px; height: auto; }
+body:has(.caixa-home) footer.footer ul { list-style: none; margin: 0; }
+body:has(.caixa-home) footer.footer li { color: var(--ps-ink-soft); line-height: 1.9; }
+/* only the company name reads as a heading; the first legal link ("Contacto") stays a link */
+body:has(.caixa-home) footer.footer li:first-child:not(:has(a)) { color: var(--ps-ink); font-weight: 500; }
+body:has(.caixa-home) footer.footer a { color: var(--ps-ink-soft) !important; text-decoration: none; border-bottom: 1px solid transparent; font-weight: 400 !important; }
+body:has(.caixa-home) footer.footer a:hover { color: var(--ps-ink) !important; border-bottom-color: var(--ps-salmon-600); }
+body:has(.caixa-home) footer.footer > .container + .container .row:empty { display: none !important; }
+@media (max-width: 767px) {
+  body:has(.caixa-home) footer.footer .row.justify-content-center { grid-template-columns: 1fr; gap: 20px; padding: 0 20px; }
+  body:has(.caixa-home) footer.footer { padding-bottom: 96px !important; } /* room above the mobile booking bar */
+}
+
+/* ===== Property pages: approved type and button colour only ===== */
+body:has(main.bh-ficha) main.bh-ficha { font-family: var(--ps-sans) !important; }
+body:has(main.bh-ficha) main.bh-ficha :is(p, li, span, a, label, button, input) { font-family: var(--ps-sans) !important; }
+body:has(main.bh-ficha) main.bh-ficha h1 { font-family: var(--ps-serif) !important; font-weight: 400 !important; letter-spacing: -.005em; }
+body:has(main.bh-ficha) main.bh-ficha :is(h2, h3) { font-family: var(--ps-serif) !important; font-weight: 500 !important; }
+body:has(main.bh-ficha) main.bh-ficha .btn-primary {
+  background: var(--ps-sage-700) !important; border-color: var(--ps-sage-700) !important; color: var(--ps-ivory) !important;
+}
+body:has(main.bh-ficha) main.bh-ficha .btn-primary:hover { background: var(--ps-sage-900) !important; border-color: var(--ps-sage-900) !important; }
